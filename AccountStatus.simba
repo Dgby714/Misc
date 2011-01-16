@@ -1,0 +1,22 @@
+program _;
+{$DEFINE SMART}
+{$I SRL/SRL.scar}
+
+procedure DeclarePlayers;
+begin
+  HowManyPlayers := 1;
+  NumberOfPlayers(HowManyPlayers);
+  CurrentPlayer := 0;
+
+  with Players[0] do
+  begin
+    Name := '';
+    Pass := '';
+    Pin := '';
+  end;
+end;
+
+begin
+  SetupSRL;
+  DeclarePlayers;
+end.
