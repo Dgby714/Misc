@@ -2,21 +2,54 @@ program _;
 {$DEFINE SMART}
 {$I SRL/SRL.scar}
 
+const
+  AccountPath = ScriptPath + 'Accounts\';
+
 procedure DeclarePlayers;
 begin
   HowManyPlayers := 1;
   NumberOfPlayers(HowManyPlayers);
-  CurrentPlayer := 0;
 
   with Players[0] do
   begin
     Name := '';
     Pass := '';
     Pin := '';
+    Active := True;
   end;
 end;
 
+var
+  I, J, Bitmap: integer;
+  Tabs: TIntegerArray;
+  Names: TStringArray;
+
 begin
+  Smart_Server := 2;
+  Smart_Signed := True;
   SetupSRL;
   DeclarePlayers;
+  for I := 0 to High(Players) do
+  begin
+    CurrentPlayer := I;
+    if (not (LogInPlayer)) then
+      Continue;
+
+    Wait(1000 + Random(250));
+
+    ForceDirectories(AccountPath + Players[I].Name + '\');
+
+    Tabs := [tab_Stats, tab_Inv, tab_Equip];
+    Names := ['Stats', 'Inventory', 'Equipment'];
+    for J := 0 to High(Tabs) do
+      if (GameTab(Tabs[J])) then
+      begin
+        Wait(250 + Random(100));
+        Bitmap := BitmapFromClient(MIX1 + 3, MIY1 + 3, MIX2 - 2, MIY2 - 2);
+        SaveBitmap(Bitmap, AccountPath + Players[I].Name + '\' + Names[J] + '.bmp');
+        FreeBitmap(Bitmap);
+      end;
+
+    Logout;
+  end;
 end.
