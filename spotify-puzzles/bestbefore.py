@@ -61,7 +61,7 @@ def getDate(input):
 if (__name__ == '__main__'):
 	from os.path import exists
 	if exists('input'):
-		for line in [line for line in open('input')]:
+		for line in open('input'):
 			print '%s => %s' % (line.strip(), getDate(line.strip()))
 	else:
 		print getDate(raw_input())
