@@ -3,9 +3,8 @@
 
 # Name: Best Before
 # Author: John Peel <john@dgby.org>
-# Date: Dec 4, 2012
+# Description: http://www.spotify.com/uk/jobs/tech/best-before/
 
-import sys
 from calendar import isleap, monthrange
 
 def getDate(input):
@@ -54,5 +53,4 @@ def getDate(input):
 	return '%04d-%02d-%02d' % (year, month, day)
 	
 if (__name__ == '__main__'):
-	for line in sys.stdin:
-		print getDate(line)
+	print getDate(raw_input())
