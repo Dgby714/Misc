@@ -8,8 +8,14 @@
 from calendar import isleap, monthrange
 
 def getDate(input):
-	try:
-		date = sorted(map(int, input.split('/')))
+	arr = input.split('/')
+	
+	for index, item in enumerate(arr):
+		if (len(item) == 3):
+			arr[index] = '2' + item
+	
+	try:	
+		date = sorted(map(int, arr))
 	except ValueError:
 		return '%s is illegal' % input	
 	
@@ -37,7 +43,7 @@ def getDate(input):
 			month, day, year = date
 		if (lt31 == 3):
 			month, year, day = date
-			
+				
 	if (month == 0):
 		return '%s is illegal' % input
 	
@@ -53,4 +59,9 @@ def getDate(input):
 	return '%04d-%02d-%02d' % (year, month, day)
 	
 if (__name__ == '__main__'):
-	print getDate(raw_input())
+	from os.path import exists
+	if exists('input'):
+		for line in [line for line in open('input')]:
+			print '%s => %s' % (line.strip(), getDate(line.strip()))
+	else:
+		print getDate(raw_input())
