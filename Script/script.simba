@@ -1,4 +1,4 @@
 program new;
 begin
-  WriteLn('Script-1');
+  WriteLn('Script-9999');
 end.
